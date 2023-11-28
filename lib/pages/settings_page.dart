@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/repository/hive_repository.dart';
 
@@ -13,11 +12,14 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool isPlaying = true;
+  bool isPlaying=true;
   HiveRepository hiveRepository = HiveRepository();
-  AudioPlayer player1 = AudioPlayer();
-  String audio = 'mp/key.mp3';
-int isSellected=0;
+  int currentIndex =1;
+@override
+  void initState() {
+  isPlaying=hiveRepository.getSound();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,26 +44,57 @@ int isSellected=0;
             fit: BoxFit.fitWidth,
           ),
           Center(
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(
-                  onPressed: () {
-
+                InkWell(
+                  onTap: () {
                     setState(() {
-                      isSellected==0;
-                      hiveRepository.saveSound(true);
+                      isPlaying=true;
                     });
+                    hiveRepository.saveSound(true);
                   },
-                  icon: Icon(Icons.music_note,color: isSellected==0 ?Colors.blue : Colors.grey,),
+                  splashColor: Colors.green,
+                  child: Container(
+                    height: 50,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: isPlaying? Colors.blue : Colors.white,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.music_note,
+                        color: isPlaying ? Colors.white : Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
-                IconButton(onPressed: () {
-                 setState(() {
-                   isSellected=1;
-                   hiveRepository.saveSound(false);
-                 });
-                }, icon: Icon(Icons.music_off,color: isSellected==1?Colors.blue :Colors.grey,)),
+                SizedBox(height: 50,),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      isPlaying=false;
+                    });
+                    hiveRepository.saveSound(false);
+                  },
+                  splashColor: Colors.green,
+                  child: Container(
+                    height: 50,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: isPlaying ? Colors.white : Colors.blue,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.music_off,
+                        color: isPlaying ? Colors.black : Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

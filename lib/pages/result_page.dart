@@ -104,7 +104,7 @@ print("${hiveRepository.getCurrentTime()}");
                   ),
                 ),
                 Text(
-                  '${((widget.result / widget.numOfAns).toDouble() * 100)}%',
+                  '${((widget.result / widget.numOfAns).toDouble() * 100).toInt()}%',
                   style: TextStyle(
                     fontSize: 30,
                     color: a >= 50 ? Colors.white : Colors.red,

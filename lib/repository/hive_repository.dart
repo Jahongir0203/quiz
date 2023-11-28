@@ -35,7 +35,7 @@ class HiveRepository {
   }
 
   bool getSound(){
-    return _box.get('onTap',defaultValue: true);
+    return _box.get('onTap',defaultValue:true);
   }
 List<String> getCurrentTime(){
  return _box.get('currentTime',defaultValue: <String>[]);
